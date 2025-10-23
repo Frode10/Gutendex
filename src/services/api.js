@@ -1,6 +1,31 @@
 const BASE_URL = 'https://gutendex.com/books/';
 
 /**
+ * Fetch with timeout
+ * @param {string} url - URL to fetch
+ * @param {number} timeout - Timeout in milliseconds
+ * @returns {Promise<Response>}
+ */
+const fetchWithTimeout = async (url, timeout = 30000) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('Request timeout - API-et tar for lang tid å svare');
+    }
+    throw error;
+  }
+};
+
+/**
  * Fetch books from Gutendex API
  * @param {Object} params - Query parameters
  * @returns {Promise<Object>} API response
@@ -23,7 +48,7 @@ export const fetchBooks = async (params = {}) => {
   const url = `${BASE_URL}?${queryParams.toString()}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetchWithTimeout(url);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -42,7 +67,7 @@ export const fetchBooks = async (params = {}) => {
  */
 export const fetchBookById = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}${id}`);
+    const response = await fetchWithTimeout(`${BASE_URL}${id}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
