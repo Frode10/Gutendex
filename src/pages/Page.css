@@ -1,0 +1,38 @@
+.page {
+  flex: 1;
+  padding: 2rem 0;
+  min-height: calc(100vh - 200px);
+}
+
+.page-title {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.page-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 4rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1.5rem 0;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+}
