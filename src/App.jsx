@@ -53,7 +53,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename: '/Gutendex',
+});
 
 function App() {
   return <RouterProvider router={router} />;
