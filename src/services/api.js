@@ -1,4 +1,4 @@
-const BASE_URL = 'https://gutendex.com/books';
+const BASE_URL = 'https://gutendex.com/books/';
 
 /**
  * Fetch books from Gutendex API
@@ -42,7 +42,7 @@ export const fetchBooks = async (params = {}) => {
  */
 export const fetchBookById = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/${id}`);
+    const response = await fetch(`${BASE_URL}${id}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
